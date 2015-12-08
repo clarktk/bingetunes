@@ -15,7 +15,7 @@
     //
     //GET index route
     $app->get('/', function() use ($app){
-        $app->render('home2.php');
+        $app->render('home.php');
     });
     
     //GET about route
