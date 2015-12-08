@@ -1,0 +1,13 @@
+{
+    "name": "vendor/2016-binge-tunes",
+    "description": "Description of project 2016_BingeTunes.",
+    "authors": [
+        {
+            "name": "Terrance Clark",
+            "email": "clarktk81@hotmail.com"
+        }
+    ],
+    "require": {
+        "slim/slim": "* 2.6.2"
+    }
+}
