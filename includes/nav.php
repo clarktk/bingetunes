@@ -145,6 +145,7 @@
 //                              'Contact'=> '/2016_BingeTunes/contact.php',
 //
 //                            );
+                                
                             $home = array(
                               'page' => 'Home',
                               'url' => '/2016_BingeTunes/',
@@ -180,15 +181,30 @@
                               'url' => '/2016_BingeTunes/contact',
                               'icon' => 'phone'
                             );
-                            $pages = array(
-                              'Home' => $home,
-                              'About' => $about,
-                              'Register' => $register,
-                              'Login' => $login,
-                              'Band Spotlight' => $band,
-                              'Favorites' => $favorites,
-                              'Contact' => $contact
+                            $logout = array(
+                              'page' => 'Logout',
+                              'url' => '/2016_BingeTunes/logout',
+                              'icon' => 'phone'
                             );
+                            if(!empty($_SESSION['user_id'])){
+                                $pages = array(
+                                  'Home' => $home,
+                                  'About' => $about,
+                                  'Band Spotlight' => $band,
+                                  'Favorites' => $favorites,
+                                  'Contact' => $contact,
+                                  'Logout'=> $logout
+                                );
+                            }else{
+                                $pages = array(
+                                  'Home' => $home,
+                                  'About' => $about,
+                                  'Register' => $register,
+                                  'Login' => $login,
+                                  'Favorites' => $favorites,
+                                  'Contact' => $contact
+                                );
+                            }
 //                            //Find out which page user is viewing
 //                            $this_page = $_SERVER['REQUEST_URI'];
 //                            //echo $this_page;

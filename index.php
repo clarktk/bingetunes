@@ -63,7 +63,8 @@
     $app->get('/logout', function() use ($app){
         session_unset(); //unset session variable
         session_destroy(); //destroy session data in storage
-        $app->render('home.php');
+        //$app->render('home.php');
+        $app->response->redirect('/2016_BingeTunes/');
     });
     
     //GET contact route
