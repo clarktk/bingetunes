@@ -10,19 +10,19 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                                 <div class="event-block">
-                                                    <form action="#" method="post" id="contact_form" class="contact-form">
+                                                    <form action="login" method="post" id="contact_form" class="contact-form">
                                                         <div class="row">
                                                             <div class="col-lg-6 col-md-6 col-sm-6">
-                                                                <label for="username">Username</label><input type="text" id="username" class="comments-line" name="author">
+                                                                <label for="username">Username</label><input type="text" name="username" id="username" class="comments-line" name="author">
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-sm-6">
-                                                                <label for="passowrd">Password</label><input type="text" id="password" class="comments-line" name="author">
+                                                                <label for="passowrd">Password</label><input type="text" name="password" id="password" class="comments-line" name="author">
                                                             </div>
                                                             
                                                             
                                                         </div>
                                                         <p class="form-submit">
-                                                            <input type="submit" name="submit" id="submit" value="Register" class="submit contact-button submit">
+                                                            <input type="submit" name="submit" id="submit" value="Login" class="submit contact-button submit">
                                                         </p>
                                                     </form>
                                                 </div>

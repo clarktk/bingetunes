@@ -1,5 +1,8 @@
 
 <div class="footer footer-wrap opacity">
+    <?php
+    if(!empty($_SESSION['user_id'])){
+    ?>
             <section class="player">
                 
                 <div class="row">
@@ -128,6 +131,7 @@
                     </div>
                 </div>
             </section>
+    <?php } ?>
         </div>
 
         <!-- ======================================================================

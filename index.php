@@ -1,4 +1,6 @@
 <?php 
+    session_start();
+
     include 'includes/header.php';//header
     //include 'templates/home.php';//home page template
     
@@ -33,6 +35,14 @@
         $app->render('login.php');
     });
     
+    
+    
+    //POST contact route
+    $app->post('/login', function() use ($app){
+        //var_dump($_POST);    
+        $_SESSION['user_id']= 1;
+    });
+    
     //GET band route
     $app->get('/band', function() use ($app){
         $app->render('band.php');
@@ -40,7 +50,20 @@
     
     //GET favorites route
     $app->get('/favorites', function() use ($app){
-        $app->render('favorites.php');
+        if(!empty($_SESSION['user_id'])){
+            $app->render('favorites.php');
+            
+        }else{
+            $app->render('login.php');
+        }
+        
+    });
+    
+    //GET logout route
+    $app->get('/logout', function() use ($app){
+        session_unset(); //unset session variable
+        session_destroy(); //destroy session data in storage
+        $app->render('home.php');
     });
     
     //GET contact route
