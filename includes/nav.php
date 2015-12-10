@@ -34,7 +34,7 @@
 
                                             <div class="container-fluid">
                                                 <div class="row">
-                                                    <div class="col-md-8">
+<!--                                                    <div class="col-md-8">
                                                         <div class="row">
                                                             <div class="col-lg-4 ">
                                                                 <h2 class="header-entry">
@@ -95,11 +95,11 @@
                                                                       
                                                             </div>
                                                         </div>    
-                                                            <!--div id="jplayer_inspector"></div -->
+                                                            div id="jplayer_inspector"></div 
                                                         
 
-                                                    </div>
-                                                    <div class="col-md-4">
+                                                    </div>-->
+                                                    <div class="col-md-offset-8 col-md-4">
                                                         <!--   search -->
                                                         <div class="wrap search-wrap ">
                                                             <form method="get" role="search" action="" class="sidebar-search ">
