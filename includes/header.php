@@ -16,8 +16,8 @@
         ======================================================================= -->
         <link href='http://fonts.googleapis.com/css?family=Lato:400,300,300italic,400italic,700|Open+Sans:400,700' rel='stylesheet' type='text/css' />
 
-        <link rel="stylesheet" href="css/bootstrap.css" />
-        <link rel="stylesheet" href="css/style.css" />        
+        <link rel="stylesheet" href="/2016_BingeTunes/css/bootstrap.css" />
+        <link rel="stylesheet" href="/2016_BingeTunes/css/style.css" />        
         
     </head>
  
