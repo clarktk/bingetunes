@@ -7,16 +7,16 @@
 
         <div class="row">
 
-            <div class="col-lg-8">
-
-                <div id="TickerBC57937577" class="bc_ticker" style="width: 100%;overflow: auto;overflow-x: hidden;border-style: none;border-width: 0;border-color: #FFFFFF;background-color: #FFFFFF;">
+            <div class="col-lg-8" align="center">
+                <div><p></p></div>
+                <div id="TickerBC57937577" class="bc_ticker" style="width: 100%;overflow: auto;overflow-x: hidden;border-style: none;border-width: 0;border-color: #000000;background-color: #000000;">
                     <table width="100%">
-                        <tr>
-                            <td width="10" style="vertical-align: top;" style="color: #0000CC; font-size: 10pt; font-family: Arial,Helvetica;"><a id="TickerPrevBC57937577" href="javascript: ;" onclick="PrevTickerBC57937577();" class="bc_tickerarrow" style="text-decoration: none; color: #0000CC;">&laquo;</a></td>
-                            <td id="TickerContentBC57937577" class="bc_tickercontent" style="vertical-align: top;background-color: #FFFFFF;">
-                                <a id="TickerLinkBC57937577" href="javascript: ;" class="bc_tickerlink" style="text-decoration: none;" target="_top"><b><span id="TickerTitleBC57937577" class="bc_tickertitle" style="color: #0000CC; font-size: 10pt; font-family: Arial,Helvetica;"></span></b></a>			<span id="TickerSummaryBC57937577" class="bc_tickersummary" style="color: #000000; font-size: 10pt; font-family: Arial,Helvetica;"></span>
+                        <tr align="center">
+                            <td width="10" style="vertical-align: top;" style="color: #0000CC; font-size: 14pt; font-family: Arial,Helvetica;"><a id="TickerPrevBC57937577" href="javascript: ;" onclick="PrevTickerBC57937577();" class="bc_tickerarrow" style="text-decoration: none; color: #0000CC;">&laquo;</a></td>
+                            <td id="TickerContentBC57937577" class="bc_tickercontent" style="vertical-align: top;background-color: #000000;">
+                                <a id="TickerLinkBC57937577" href="javascript: ;" class="bc_tickerlink" style="text-decoration: none;" target="_top"><b><span id="TickerTitleBC57937577" class="bc_tickertitle" style="color: red; font-size: 14pt; font-family: Arial,Helvetica;"></span></b></a>			<span id="TickerSummaryBC57937577" class="bc_tickersummary" style="color: #000000; font-size: 10pt; font-family: Arial,Helvetica;"></span>
                             </td>
-                            <td width="10" style="vertical-align: top;" style="color: #0000CC; font-size: 10pt; font-family: Arial,Helvetica;"><a id="TickerNextBC57937577" href="javascript: ;" onclick="NextTickerBC57937577();" class="bc_tickerarrow" style="text-decoration: none; color: #0000CC;">&raquo;</a></td>
+                            <td  width="10" style="vertical-align: top;" style="color: red; font-size: 14pt; font-family: Arial,Helvetica;"><a id="TickerNextBC57937577" href="javascript: ;" onclick="NextTickerBC57937577();" class="bc_tickerarrow" style="text-decoration: none; color: #0000CC;">&raquo;</a></td>
                         </tr>
                     </table>
                     <!-- DO NOT CHANGE OR REMOVE THE FOLLOWING NOSCRIPT SECTION OR THE BLASTCASTA NEWS TICKER WILL NOT FUNCTION PROPERLY. -->
