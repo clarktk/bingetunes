@@ -35,6 +35,17 @@ body {
 	background: #000;
 	background-size: cover;
 }
+.page-header{
+    border: none;
+}
+/*Sets Spotify search bar width*/
+.form-control {
+    width: 100%;
+}
+/*Sets main container width*/
+.container {
+    width: 90%;
+}
 .container img {
 	max-width: 100%;
 	height: auto;
@@ -2659,11 +2670,29 @@ a.custom:focus{
 	background-color: rgba(97, 97, 97, 0.6);
 	color: rgba(255, 255, 255, 0.6);
 }
-.content-galleries .custom-btn:hover,
+/*.content-galleries .custom-btn:hover,
 .video-block .view-wrap .custom-btn:hover,
 .content-albums .view-wrap .custom-btn:hover{
 	background-color: #e0191a !important;
 	color: #fff !important;
+}*/
+/*Sets colors for Spotify button*/
+.btn-success {
+        font-size: 20px;
+	background-color: #dfdfdf;
+	color: #616161;
+	line-height: 26px;
+	padding: 12px 20px;
+        border-color: #dfdfdf;
+}
+
+.btn-success:hover {
+        font-size: 20px;
+	background-color: #e0191a;
+	line-height: 26px;
+	padding: 12px 20px;
+	color: #fff;
+        border-color: #e0191a;
 }
 
 /* =============================== ^ ALBUMS  ===============================

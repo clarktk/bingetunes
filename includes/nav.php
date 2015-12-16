@@ -166,6 +166,11 @@
                               'url' => '/2016_BingeTunes/login',
                               'icon' => 'login'
                             );
+                            $search = array(
+                              'page' => 'search',
+                              'url' => '/2016_BingeTunes/spotifySearch_2.php',
+                              'icon' => 'search'
+                            );
                             $band = array(
                               'page' => 'Band Spotlight',
                               'url' => '/2016_BingeTunes/band',
@@ -191,6 +196,7 @@
                                   'Home' => $home,
                                   'About' => $about,
                                   'Band Spotlight' => $band,
+                                  'Band Search' => $search,
                                   'Favorites' => $favorites,
                                   'Contact' => $contact,
                                   'Logout'=> $logout
