@@ -108,6 +108,18 @@ figure .opacity{
 .footer.opacity{
 	background-color: rgba(0, 0, 0, 0.8);
 }
+.ticker {
+    width: 100%;
+    position: relative;
+    left: -40px;
+    margin:0 auto;
+    padding: 1em;
+    line-height: 1.4em;
+    color: red;
+}
+.bc_tickercontent{
+    color: red;
+}
 .search-line.opacity{
 	background-color: rgba(0, 0, 0, 0.3);
 }
@@ -2911,6 +2923,7 @@ a.custom:focus{
 	.about-section .row .col-lg-10{
 		width: 100%;
 	}
+        
 }
 
 
@@ -3071,6 +3084,9 @@ a.custom:focus{
 	.sidebar .search-wrap{
 		padding-top: 24px;		
 	}
+        .ticker {
+            display: none;
+}
 
 }
 @media screen and (min-width: 992px) {
