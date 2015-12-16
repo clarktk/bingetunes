@@ -45,7 +45,9 @@ class DbHandler {
                 break;
             default:
                 echo 'An error has occured!  Please try again later';
+                echo '<BR>'.$code;
                 break;
+
         }
     }//end of dbConnectError function
     

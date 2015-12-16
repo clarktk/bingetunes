@@ -25,7 +25,8 @@ class DbConnect {
      * @return database connection handler
      */  
     function connect(){
-        include_once dirname($_SERVER['DOCUMENT_ROOT']).'/2016_DBCon/2016_OOP_Connect.php';
+//        include_once dirname($_SERVER['DOCUMENT_ROOT']).'/2016_bingetunes/includes/config.php';
+        include_once './includes/config.php';
         //c:/xampp/2016_dbconn/2016_oop_connect.php
         
         //make the connection

@@ -59,6 +59,52 @@
         
     });
     
+    //GET ADMIN route
+    
+    $app->get('/admin', function () use ($app){
+        if(empty($_SESSION['user_admin'])){
+            //not an admin user - redirect to login screen
+            $app->response->redirect('/2016_BingeTunes/login');
+    }else{
+            //admin user - show admin page
+            $app->render('admin/admin.php');
+    }
+    });
+    
+    //GET Admin about route
+    $app->get('/admin/about', function() use ($app){
+        if(empty($_SESSION['user_admin'])){
+            //not an admin user - redirect to login screen
+            $app->response->redirect('/2016_BingeTunes/login');
+        }else{
+            //admin user - show admin page
+            $app->render('admin/about.php');
+        }    
+    });
+
+    //GET Admin add band route
+    $app->get('/admin/add_band', function() use ($app){
+        if(empty($_SESSION['user_admin'])){
+            //not an admin user - redirect to login screen
+            $app->response->redirect('/2016_BingeTunes/login');
+        }else{
+            //admin user - show admin page
+            $app->render('admin/add_band.php');
+        }    
+    });
+
+    //GET Admin modify route
+    $app->get('/admin/modify_spotlight', function() use ($app){
+        if(empty($_SESSION['user_admin'])){
+            //not an admin user - redirect to login screen
+            $app->response->redirect('/2016_BingeTunes/login');
+        }else{
+            //admin user - show admin page
+            $app->render('admin/modify_spotlight.php');
+        }    
+    });
+    
+    
     //GET logout route
     $app->get('/logout', function() use ($app){
         session_unset(); //unset session variable
