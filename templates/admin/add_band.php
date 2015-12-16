@@ -12,7 +12,7 @@
                         require_once './classes/DbHandler.php';
         
                         $db = new DbHandler();
-                        
+
                         ?>
                             
                     </div>

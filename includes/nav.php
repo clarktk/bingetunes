@@ -148,67 +148,66 @@
                                 
                             $home = array(
                               'page' => 'Home',
-                              'url' => '/2016_BingeTunes/',
-                              'icon' => 'home'
+                              'url' => '/2016_BingeTunes/'
                             );
                             $about = array(
                               'page' => 'About',
-                              'url' => '/2016_BingeTunes/about',
-                              'icon' => 'question-sign'
+                              'url' => '/2016_BingeTunes/about'
                             );
                             $register = array(
                               'page' => 'Register',
-                              'url' => '/2016_BingeTunes/register',
-                              'icon' => 'register'
+                              'url' => '/2016_BingeTunes/register'
                             );
                             $login = array(
                               'page' => 'Login',
-                              'url' => '/2016_BingeTunes/login',
-                              'icon' => 'login'
+                              'url' => '/2016_BingeTunes/login'
                             );
                             $search = array(
                               'page' => 'search',
-                              'url' => '/2016_BingeTunes/spotifySearch_2.php',
-                              'icon' => 'search'
+                              'url' => '/2016_BingeTunes/spotifySearch_2.php'
                             );
                             $band = array(
                               'page' => 'Band Spotlight',
-                              'url' => '/2016_BingeTunes/band',
-                              'icon' => 'band'
+                              'url' => '/2016_BingeTunes/band'
                             );
-                            $favorites = array(
-                              'page' => 'favorites',
-                              'url' => '/2016_BingeTunes/favorites',
-                              'icon' => 'favorites'
+                            $admin = array(
+                              'page' => 'admin',
+                              'url' => '/2016_BingeTunes/admin'
                             );
                             $contact = array(
                               'page' => 'Contact',
-                              'url' => '/2016_BingeTunes/contact',
-                              'icon' => 'phone'
+                              'url' => '/2016_BingeTunes/contact'
                             );
                             $logout = array(
                               'page' => 'Logout',
-                              'url' => '/2016_BingeTunes/logout',
-                              'icon' => 'phone'
+                              'url' => '/2016_BingeTunes/logout'
                             );
-                            if(!empty($_SESSION['user_id'])){
+                            if(!empty($_SESSION['user_id'])  && !empty($_SESSION['user_admin']) ){
                                 $pages = array(
-                                  'Home' => $home,
-                                  'About' => $about,
-                                  'Band Spotlight' => $band,
-                                  'Band Search' => $search,
-                                  'Favorites' => $favorites,
-                                  'Contact' => $contact,
-                                  'Logout'=> $logout
+                                    'Home' => $home,
+                                    'About' => $about,
+                                    'Band Spotlight' => $band,
+                                    'Band Search' => $search,
+                                    'Contact' => $contact,
+                                    'Admin' => $admin,
+                                    'Logout'=> $logout                                    
+                                );
+                            }elseif(!empty($_SESSION['user_id'])){
+                                $pages = array(
+                                    'Home' => $home,
+                                    'About' => $about,
+                                    'Band Search' => $search,
+                                    'Contact' => $contact,
+                                    'Logout'=> $logout
                                 );
                             }else{
                                 $pages = array(
-                                  'Home' => $home,
-                                  'About' => $about,
-                                  'Register' => $register,
-                                  'Login' => $login,
-                                  'Favorites' => $favorites,
-                                  'Contact' => $contact
+                                    'Home' => $home,
+                                    'About' => $about,
+                                    'Band Spotlight' => $band,  
+                                    'Contact' => $contact,
+                                    'Register' => $register,
+                                    'Login' => $login
                                 );
                             }
 //                            //Find out which page user is viewing
