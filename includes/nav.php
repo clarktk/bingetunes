@@ -24,7 +24,7 @@
                         <div class="col-lg-2 col-md-4 col-sm-4">
                                <!--   Logo -->
                                 <div class="logo">
-                                    <h1><a href="index.php"><img src="images/binge-tunes-logo.png" alt="Binge Tunes - Satisfy your craving!" /></a></h1>
+                                    <h1><a href="index.php"><img src="/2016_BingeTunes/images/binge-tunes-logo.png" alt="Binge Tunes - Satisfy your craving!" /></a></h1>
                                     <h2 class="slogan logo-slogan">Satisy your craving!</h2>
                                 </div>
                             <!-- ^ Logo -->
