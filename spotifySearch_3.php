@@ -11,7 +11,7 @@
                 <span class="col-lg-2 col-md-12 col-sm-12 col-xs-12 extend-col extend-left"></span><div class="page-header">
 <div class="page-header">
     <div class="container">
-        <h3>Spotify Search</h3>
+        <h3>Binge Tunes Search</h3>
         <?php
         $id = $_GET['id'];
         $imageURL = $_GET['url'];
