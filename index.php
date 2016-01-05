@@ -18,6 +18,10 @@
     $app->get('/', function() use ($app){
         $app->render('home.php');
     });
+    //GET index route
+    $app->get('/home', function() use ($app){
+        $app->render('home.php');
+    });
     
     //GET about route
     $app->get('/about', function() use ($app){
@@ -70,16 +74,20 @@
 
         if(empty($reg_errors)){ 
             //Validation OK: 
-            
+
             require_once './classes/DbHandler.php';
             $db = new DbHandler();
             $data = $db->createUser($first_name, $last_name, $email, $user_name, $password2);
            
-
+            
             if ($data['message']== 'USER_SUCCESSFULLY_CREATED') {
-                echo '<div class="row">
-                    <div class="box">
-                        <div class="col-lg-12">'; 
+               echo'<div class="content-main-wrap">
+                <div class="content-main opacity">
+                    <section class="content-section contact-section">
+                        <div class="wrap content-contact">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-12">';
 
                 //user registered success -test activation 
                 $y = $data['active'];
@@ -92,7 +100,7 @@
                     $messageTEXT = "Thank you for registering at BingeTunes.\n\n
                                     To activate your account please click on this link in your browser:  "
                                     .BASE_URL."activate/".urlencode($email)."/$y";
-                    $messageHTML = "<p><strong>Thank you for registering at CoffeeBuzz.</strong></p> 
+                    $messageHTML = "<p><strong>Thank you for registering at BingeTunes.</strong></p> 
                                     <p>To activate your account, please click on this link:</p>".
                                     "<a href=\"".BASE_URL . 'activate/'.urlencode($email)."/$y\">Activate Now</a>";                      
                     $fromEmail = 'daniel.bujold.0719@gmail.com';
@@ -102,16 +110,16 @@
 
                     //send email
                     $result = mymail($replyToEmail, $replyToName, $mailSubject, $messageHTML, $messageTEXT, $fromEmail, $fromName, $toEmail, $toName);
-
+                    
                     if($result){
                         // MAIL SUCCESS: show html message
                         echo '<div class="col-lg-12">
-                                <hr>
-                                    <h2 class="intro-text text-center"><strong>Account Registered</strong></h2>
-                                <hr>
+                                <header>
+                                    <h2 class="entry-header ">Account Registered</h2>
+                                </header><hr /><br />
                                </div>
                               <div class="col-lg-12">
-                                <div class="alert alert-success"><strong>'.$data['message'].'</strong>
+                                <div>
                                     <p>A confirmation email has been sent to your email address.  
                                        Please click on the link in that email in order to activate your account.</p>
                                 </div>
@@ -120,9 +128,9 @@
                     }else{
                         //MAIL ERROR
                         echo '<div class="col-lg-12">
-                                <hr>
-                                    <h2 class="intro-text text-center"><strong>Account Registered</strong></h2>
-                                <hr>
+                                <header>
+                                    <h2 class="entry-header ">Account Registered</h2>
+                                </header><hr /><br />
                                </div>
                               <div class="col-lg-12">
                                 <div class="alert alert-warning"><strong>'.$data['message'].'</strong>
@@ -139,90 +147,330 @@
                 $app->render('register.php',array('register'=>$reg_errors)); 
             }
             
-           echo '<div class="clearfix"></div>
-                   </div>
-                </div>'; 
+           echo '
+                                    </div>
+
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>'; 
 
         }else{
             //Validation FAIL:
            $app->render('register.php',array('register'=>$reg_errors)); 
         }
        }
-    });
+    });    
+   
+    //PUT ACTIVATE ROUTE
+    $app->put('/activate', function() use ($app){
+    //check for required params
+    verifyRequiredParams(array('email', 'active'));
+    //create empty response array
+    $response = array();
     
+    //read post parameters
+    $email = $app->request->post('email');
+    $active= $app->request->post('active');
+    
+    //validate email parameter
+    validateEmail($email);
+    
+    //validate the activation code (length should be 32 characters)
+    if (strlen($active)==32){
+       //create instance of dbHandler and call method 
+        $db = new DbHandler();
+        $res = $db->activateUser($email, $active);
+        
+        //check response 
+        if($res['message']==='USER_ACTIVE_SUCCESS'){
+            //SUCCESS
+            $response['error'] = false;
+            $response['message']='Your account is now active';
+        }else if($res['message']==='USER_ACTIVE_FAIL'){
+            //FAIL
+            $response['error'] = true;
+            $response['message']='Oops, An error has occured';
+        }else if($res['message']==='USER_NOT_EXIST'){
+            //USER DOES NOT EXIST IN DATABASE
+            $response['error'] = true;
+            $response['message']='Sorry, that email does not exist';
+        }
+        
+    }else{
+        $response['error'] = true;
+        $response['message'] = 'Activation code is not valid!';
+    }
+    
+    //output final response
+    echo $response;
+    
+});   
+
+    //GET Activate route
+$app->get('/activate/:x/:y', function($x,$y) use ($app){
+//    $email = $app->request->get('x');
+//    $active= $app->request->get('y');
+    
+            require_once './classes/DbHandler.php';
+            $db = new DbHandler();
+            $data = $db->activateUser($x, $y);
+            
+            echo "<div class=\"content-main opacity\">
+                    <section class=\"content-section contact-section\">
+                        <div class=\"wrap content-contact\">
+                            <div class=\"container-fluid\">
+                                        <header>
+                                        <h2 class=\"entry-header \">Account Activation</h2>
+                                        </header><hr /><br />
+                                    </div>
+                                        ";
+            
+            if($data['message']=='USER_ACTIVE_SUCCESS'){
+                echo '<h3>Account Activated</h3>';
+                
+            }elseif($data['message']=='USER_ACTIVE_FAIL'){
+                echo '<h3>Activation Error</h3>';    
+            }elseif($data['message']=='USER_NOT_EXIST'){
+                echo "<h3>User doesn't exist</h3>";  
+            };
+            echo "</div></section></div>";
+});
+
     //GET login route
     $app->get('/login', function() use ($app){
         $app->render('login.php');
     });
     
-    
-    
     //POST login route
     $app->post('/login', function() use ($app){
-        //var_dump($_POST);    
-        $_SESSION['user_id']= 1;
-        $_SESSION['user_admin']=true;
-    });
+
+    //create empty response array
+    $response = array();
+    
+    //read post params
+    $email_username = $app->request->post('username');
+    $password =  $app->request->post('password');
+    
+    //instantiate the DbHandler class and call the checkloging method
+    require_once './classes/DbHandler.php';
+    $db = new DbHandler();
+    
+    //check for correct email and password combination
+    if($db->checkLogin($email_username, $password)){
+        //valid user - get user details
+        $user = $db->getUserByEmail($email_username);
+        if(!empty($user)){
+//          var_dump($user);
+            foreach ($user as $item):
+            $userid = $item['user_id'];
+            $firstName = $item['first_name'];
+            $lastName = $item['last_name'];
+            $username = $item['user_name'];
+            $fullname = $firstName. ' ' .$lastName;
+            $admin = $item['admin'];
+            $expired = $item['notexpired'];
+            endforeach;
+        
+            //store data in session
+            $_SESSION['user_id']=$userid;
+            $_SESSION['fullname']=$fullname;
+            $_SESSION['user_admin']=$admin;
+            $_SESSION['user_not_expired']=$expired;
+            
+            echo    '<div class="content-main-wrap">
+                        <div class="content-main opacity">
+                            <section class="content-section contact-section">
+                            <div class="wrap content-contact">
+                                <div class="container-fluid">
+                                <header>
+                                <h2 class="entry-header ">Welcome '.$username.'</h2>
+                                </header><hr /><br />
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="alert">
+                                    <p>You have successfully signed in!  
+                                    You will be automatically redirected to the home page in <span id="count">5</span> seconds...
+                                    </p>
+                                </div>';
+                                echo "<script>
+                                var delay = 5 ;
+                                var url = 'home';
+                                function countdown() {
+                                        setTimeout(countdown, 1000) ;
+                                        $('#count').html(delay);
+                                        delay --;
+                                        if (delay < 0 ) {
+                                                window.location = url ;
+                                                delay = 0 ;
+                                        }
+                                }
+                                countdown() ;   
+                                </script>"; 
+                                echo '<div class="clearfix"></div>
+                            </div>
+                            </section>
+                        </div>
+                    </div>';
+        }
+    }else{
+        //invalide user - build response
+        $data ['message'] = 'Login failed, incorrect credentials!';
+        $app->render('login.php',array('login'=>$data ['message']));
+        
+    }
+    //output final response
+   
+
+});
+    
+//    //GET band route
+//    $app->get('/band', function() use ($app){
+//        $app->render('band.php');
+//    });
     
     //GET band route
-    $app->get('/band', function() use ($app){
-        $app->render('band.php');
+    $app->get('/bandsearch', function() use ($app){
+        $app->render('bandsearch.php');
     });
     
-    
-    // <editor-fold defaultstate="collapsed" desc="Admin routes">
-    //GET ADMIN route
+    //POST band route
+    $app->post('/bandsearch', function() use ($app){
+            function getData($url) {
+                //$url = "https://api.spotify.com/v1/search?q=$q&type=artist&market=US";
+                //echo $url;
+                //exit();
+                //get the data from json call to api
+                $curl = curl_init($url);
+
+                // indicates that we want the response back
+                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+                // curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+                //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+                //curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+                // exec curl and get the data back
+                $json_data = curl_exec($curl);
+
+                // remember to close the curl session once we are finished retrieveing the data
+                curl_close($curl);
+                return $json_data;
+                }
+        //$app->render('bandsearch.php');
+        if (!empty($_POST['spotify_q'])) {
+                $q = urlencode($_POST['spotify_q']); //spotify needs encoded url
+                //prepare json url 
+                $url = "https://api.spotify.com/v1/search?q=$q&type=artist&market=US";
+
+                $artistData = json_decode(getData($url), true);
+                //var_dump($artistData['artists']['items']);            
+                if (!empty($artistData['artists']['items'])) {
+                $id = $artistData['artists']['items'][0]['id'];
 
 
-    $app->get('/admin', function () use ($app) {
-        if (empty($_SESSION['user_admin'])) {
-            //not an admin user - redirect to login screen
-            $app->response->redirect('/2016_BingeTunes/login');
-    } else {
-            //admin user - show admin page
-            $app->render('admin/admin.php');
-    }
-    });
+                $url = "https://api.spotify.com/v1/artists/$id/albums?market=US";
+                $albumData = json_decode(getData($url), true);
+                //var_dump($albumData['items']);
 
-
-    //GET Admin about route
-    $app->get('/admin/about', function() use ($app) {
-        if (empty($_SESSION['user_admin'])) {
-            //not an admin user - redirect to login screen
-            $app->response->redirect('/2016_BingeTunes/login');
-        } else {
-            //admin user - show admin page
-            $app->render('admin/about.php');
+                $albums = $albumData['items'];
+                $app->render('bandsearch.php',array('albums'=>$albums));
+                
+                }
         }
-
+        
     });
-
-    //GET Admin add band route
-    $app->get('/admin/add_band', function() use ($app) {
-        if (empty($_SESSION['user_admin'])) {
-            //not an admin user - redirect to login screen
-            $app->response->redirect('/2016_BingeTunes/login');
-        } else {
-            //admin user - show admin page
-            $app->render('admin/add_band.php');
-        }
-
-    });
-
-    //GET Admin modify route
-    $app->get('/admin/modify_spotlight', function() use ($app) {
-        if (empty($_SESSION['user_admin'])) {
-            //not an admin user - redirect to login screen
-            $app->response->redirect('/2016_BingeTunes/login');
-        } else {
-            //admin user - show admin page
-            $app->render('admin/modify_spotlight.php');
-        }
-
-    }); // </editor-fold>
-
     
+     //GET band route
+    $app->get('/bandresult/:id/:url', function($id,$url) use ($app){
+//        echo $id;
+//        echo '<br>';
+//        echo str_replace('|','/',$url);
+//        echo 'hello';
+        
+
+        $imageURL = str_replace('|','/',$url);
+        $url = "https://api.spotify.com/v1/albums/$id/tracks?market=US";
+        
+        //$url = "https://api.spotify.com/v1/search?q=$q&type=artist&market=US";
+        //echo $url;
+        //exit();
+        //get the data from json call to api
+        $curl = curl_init($url);
+
+        // indicates that we want the response back
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+       // curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        //curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+        // exec curl and get the data back
+        $json_data = curl_exec($curl);
+        $data = json_decode($json_data, true);
+        // remember to close the curl session once we are finished retrieveing the data
+        curl_close($curl);
+        //var_dump($data);
+        //$app->render('bandresult.php');
+        
+        //var_dump($data['items']);
+        $app->render('bandresult.php',array('artist'=>$data['items'],'imageURL'=>$imageURL));
+        
+    });    
     
+//    // <editor-fold defaultstate="collapsed" desc="Admin routes">
+//    //GET ADMIN route
+//
+//
+//    $app->get('/admin', function () use ($app) {
+//        if (empty($_SESSION['user_admin'])) {
+//            //not an admin user - redirect to login screen
+//            $app->response->redirect('/2016_BingeTunes/login');
+//    } else {
+//            //admin user - show admin page
+//            $app->render('admin/admin.php');
+//    }
+//    });
+//
+//
+//    //GET Admin about route
+//    $app->get('/admin/about', function() use ($app) {
+//        if (empty($_SESSION['user_admin'])) {
+//            //not an admin user - redirect to login screen
+//            $app->response->redirect('/2016_BingeTunes/login');
+//        } else {
+//            //admin user - show admin page
+//            $app->render('admin/about.php');
+//        }
+//
+//    });
+//
+//    //GET Admin add band route
+//    $app->get('/admin/add_band', function() use ($app) {
+//        if (empty($_SESSION['user_admin'])) {
+//            //not an admin user - redirect to login screen
+//            $app->response->redirect('/2016_BingeTunes/login');
+//        } else {
+//            //admin user - show admin page
+//            $app->render('admin/add_band.php');
+//        }
+//
+//    });
+//
+//    //GET Admin modify route
+//    $app->get('/admin/modify_spotlight', function() use ($app) {
+//        if (empty($_SESSION['user_admin'])) {
+//            //not an admin user - redirect to login screen
+//            $app->response->redirect('/2016_BingeTunes/login');
+//        } else {
+//            //admin user - show admin page
+//            $app->render('admin/modify_spotlight.php');
+//        }
+//
+//    }); // </editor-fold>
+
+      
     //GET logout route
     $app->get('/logout', function() use ($app){
         session_unset(); //unset session variable
@@ -240,17 +488,79 @@
 //    $app->post('/contact', function() use ($app){
 //        var_dump($_POST);
 //    });
+   
     
-//    Alternate GET index route
-//    $app->get('/index', function() use ($app){
-//        $app->render('home.php');
-//    });
+    //404 page note found
+    $app->notFound(function() use ($app){
+    $app->render('404.php');
+});
     
-//    test
-//    $app->get('/test', function() use ($app){
-//        echo '<p>this is a test</p>';
-//   });
     
+    // <editor-fold defaultstate="collapsed" desc="============ HELPER FUNCTIONS ============">
+/**
+ * Required inputs for HTTP POST | GET
+ * @param type $required_fields
+ */
+function verifyRequiredParams($required_fields) {
+    $error = false;
+    $error_fields = "";
+    $request_params = array();
+    $request_params = $_REQUEST;
+
+
+    //Handling PUT request params
+    if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+        $app = \Slim\Slim::getInstance();
+        parse_str($app->request()->getBody(), $request_params);
+
+    }
+
+    foreach ($required_fields as $fields) {
+        if (!isset($request_params[$fields]) ||
+
+            strlen(trim($request_params[$fields])) <= 0) {
+            //some or all inputs are not there or they are empty
+            $error = true;
+            $error_fields .= $fields . ', ';
+        }
+    }
+
+
+    if ($error) {
+        //Required field(s) are missing or empty
+        $response = array();
+        $app = \Slim\Slim::getInstance();
+        $response['error'] = true;
+        $response['message'] = 'Required field(s) ' .
+
+        substr($error_fields, 0, -2) . ' is missing or empty';
+        echo $response;
+        $app->stop();
+    }
+    
+    
+}
+
+
+/**
+ * Check for valid email format
+ * @param type $email
+ */
+function validateEmail($email) {
+    $app = \Slim\Slim::getInstance(); //get handle on slim
+
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        //FAIL - RETURN MESSAGE - STOP APP
+        $response['error'] = true;
+        $response['message'] = 'Your email address is not valid';
+        echo $response;
+        $app->stop();
+
+    }
+}
+
+// </editor-fold>
     
     //4. Step 4: Run the SLIM APPLICATION
     $app->run();

@@ -3,7 +3,7 @@
 //Start the session
 session_start();
 
-define('BASE_URL', 'http://localhost:8888/2016_bingetunes/');
+define('BASE_URL', 'http://localhost:8888/2016_BingeTunes/');
 
 //ob_start(); //output buffering turned on
               //headers already sent errors

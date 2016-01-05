@@ -114,7 +114,7 @@
                                                                                 <figure>
                                                                                     <a href="#"><img src="images/photos/sarah-james.jpg" /></a>
                                                                                     <figcaption class="opacity">
-                                                                                        <h3><a href="">Paul Martin </a></h3>
+                                                                                        <h3><a href="">Terrance Clark </a></h3>
                                                                                         <hr />
                                                                                         <p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit</p>
                                                                                     </figcaption>
@@ -148,7 +148,7 @@
                                                                                 <figure>
                                                                                     <a href="#"><img src="images/photos/freddy-dowson.jpg" /></a>
                                                                                     <figcaption class="opacity">
-                                                                                        <h3><a href="">Terrance Clark </a></h3>
+                                                                                        <h3><a href="">Paul Martin</a></h3>
                                                                                         <hr />
                                                                                         <p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit</p>
                                                                                     </figcaption>

@@ -164,7 +164,7 @@
                             );
                             $search = array(
                               'page' => 'search',
-                              'url' => '/2016_BingeTunes/spotifySearch_2.php'
+                              'url' => '/2016_BingeTunes/bandsearch'
                             );
                             $band = array(
                               'page' => 'Band Spotlight',
@@ -186,10 +186,10 @@
                                 $pages = array(
                                     'Home' => $home,
                                     'About' => $about,
-                                    'Band Spotlight' => $band,
+//                                    'Band Spotlight' => $band,
                                     'Band Search' => $search,
                                     'Contact' => $contact,
-                                    'Admin' => $admin,
+//                                    'Admin' => $admin,
                                     'Logout'=> $logout                                    
                                 );
                             }elseif(!empty($_SESSION['user_id'])){
@@ -204,7 +204,7 @@
                                 $pages = array(
                                     'Home' => $home,
                                     'About' => $about,
-                                    'Band Spotlight' => $band,  
+//                                    'Band Spotlight' => $band,  
                                     'Contact' => $contact,
                                     'Register' => $register,
                                     'Login' => $login

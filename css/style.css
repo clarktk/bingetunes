@@ -42,6 +42,9 @@ body {
 .form-control {
     width: 100%;
 }
+.tune{
+    min-height: 150px;
+}
 /*Sets main container width*/
 .container {
     width: 90%;
