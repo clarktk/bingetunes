@@ -10,18 +10,37 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                                 <div class="event-block">
-                                                    <form action="#" method="post" id="contact_form" class="contact-form">
+                                                      <?php
+                                                          //Check for validation errors
+                                                      if(!empty($data['contact'])){
+                                                          //$data comes from slim framework
+                                                          //'contact' element comes from app render
+                                                          // array('contact'=>$email_errors)
+                                                      ?>
+                                                      <div class="alert alert-danger alert-dismissable">
+                                                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                          <ul>
+                                                              <?php
+                                                              $errors = $data['contact'];
+                                                              foreach ($errors as $error):
+                                                                  echo "<li>$error</li>";
+                                                              endforeach;
+                                                              ?>
+                                                          </ul>                
+                                                      </div>
+                                                      <?php } ?>    
+                                                    <form action="contact" method="post" id="contact_form" class="contact-form">
                                                         <div class="row">
                                                             <div class="col-lg-6 col-md-6 col-sm-6">
-                                                                <label for="author">Name</label><input type="text" id="author" class="comments-line" name="author">
+                                                                <label for="author">Name</label><input type="text" id="author" class="comments-line" name="author" value="<?php if (isset($_POST['author'])) echo $_POST['author']; ?>">
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-sm-6">
-                                                                <label for="email">E-mail</label><input type="text" id="email" class="comments-line" name="email">
+                                                                <label for="email">E-mail</label><input type="text" id="email" class="comments-line" name="email" value="<?php if (isset($_POST['email'])) echo $_POST['email']; ?>">
                                                             </div>
                                                             
                                                         </div>
                                                         
-                                                        <textarea class="comments-area" rows="10" name="comment"></textarea>
+                                                        <textarea class="comments-area" rows="10" name="comment"><?php if (isset($_POST['comment']))echo $_POST['comment']; ?></textarea>
 
                                                         <p class="form-submit">
                                                             <input type="submit" name="submit" id="submit" value="Send Message" class="submit contact-button submit">

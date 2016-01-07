@@ -211,7 +211,7 @@
 });   
 
     //GET Activate route
-$app->get('/activate/:x/:y', function($x,$y) use ($app){
+    $app->get('/activate/:x/:y', function($x,$y) use ($app){
 //    $email = $app->request->get('x');
 //    $active= $app->request->get('y');
     
@@ -481,13 +481,88 @@ $app->get('/activate/:x/:y', function($x,$y) use ($app){
     
     //GET contact route
     $app->get('/contact', function() use ($app){
+        unset($_SESSION['mailsent']);
         $app->render('contact.php');
     });
     
     //POST contact route
-//    $app->post('/contact', function() use ($app){
-//        var_dump($_POST);
-//    });
+    $app->post('/contact', function() use ($app){
+        //var_dump($_POST);
+        //exit();
+        if($_POST){
+        //if user has submitted form
+        //first prevent resubmit
+         
+        if(isset($_SESSION['mailsent'])){
+            //mail has already been sent
+            //redirect user to home page
+//            var_dump($_POST);
+//            exit();
+            header("location:contact");
+            exit();
+        }
+           
+        //checking for validation errors
+        $email_errors = array();
+        //1. Check Name
+        //   characters (between 2 and 16), apos, period, space, dash
+        if(preg_match('/^[A-Z \'.-]{2,60}$/i',$_POST['author'])){
+            //ok
+            $fullname = trim($_POST['author']);
+        }else{
+            //no match - prepare error
+            $email_errors['author'] = 'Please enter your fullname!';
+        }
+        
+        //2. Check Email
+        if(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
+            //ok
+            $email = trim($_POST['email']);
+        }else{
+            //invalid email
+            $email_errors['email'] = 'Please enter a valid email!';
+        }
+        
+        //3. Check message        
+        if(preg_match('/^[A-Z0-9 ()!\',.?-]{2,500}$/i',$_POST['comment'])){
+            //ok
+            $message = trim($_POST['comment']);
+        }else{
+            //no match - prepare error
+            $email_errors['comment'] = 'Please enter a valid message!';
+        }
+        
+        //end of validation
+        if(empty($email_errors)){
+            //validation has passed - ok to send email
+            include './includes/helpers.php';
+            
+            //prepare variables
+            //$phone = $_POST['phone']; //could also validate this
+            
+            $htmlmessage = "<h3> Email from: $fullname</h3>
+                            <p>$message</p>";
+            $textmessage = "Email from $fullname\n
+                            $message";
+            
+            //send the email
+            $result = mymail($email,$fullname,'BingeTunes Website Inquiry', $htmlmessage,$textmessage);
+            if($result){
+                //mail success - show the mailsent template
+                $app->render('mailsent.php');
+                $_SESSION['mailsent']=true;
+            }else{
+                //mail failure - show the mailerror template
+                $app->render('mailerror.php');                
+            }
+                    
+        }else{
+            //validation failed - resent user back to contact page
+            //passing the array of errors
+            $app->render('contact.php',array('contact'=>$email_errors));
+        }
+    }
+    });
    
     
     //404 page note found
